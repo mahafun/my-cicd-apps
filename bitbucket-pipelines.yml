@@ -15,12 +15,12 @@ pipelines:
   
   # && npm install && pm2 restart all
 
-    # main:
-    #   - step:
-    #       name: Deploy to Production
-    #       script:
-    #         - echo "Deploying to Production..."
-    #         - mkdir -p ~/.ssh
-    #         - echo "$SSH_KEY" > ~/.ssh/id_rsa
-    #         - chmod 600 ~/.ssh/id_rsa
-    #         - ssh -o StrictHostKeyChecking=no $SSH_USER@$PRODUCTION_HOST "cd $PRODUCTION_PATH && git pull origin main && npm install && pm2 restart all"
+    main:
+      - step:
+          name: Deploy to Production
+          script:
+            - echo "Deploying to Production..."
+            - mkdir -p ~/.ssh
+            - echo "$SSH_KEY" > ~/.ssh/id_rsa
+            - chmod 600 ~/.ssh/id_rsa
+            - ssh -o StrictHostKeyChecking=no $SSH_USER@$PROD_HOST "cd $PROD_PATH && git pull origin main && npm install && pm2 restart all"
