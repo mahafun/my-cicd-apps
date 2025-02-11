@@ -7,6 +7,7 @@ pipelines:
           name: Deploy to Staging
           script:
             - echo "Deploying to Staging..."
+            - echo "อาลำ สุดหล่อ สุดเท่"
             - mkdir -p ~/.ssh
             - echo "$SSH_KEY" > ~/.ssh/id_rsa
             - chmod 600 ~/.ssh/id_rsa
