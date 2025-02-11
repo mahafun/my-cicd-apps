@@ -10,6 +10,8 @@ pipelines:
             - mkdir -p ~/.ssh
             - echo "$SSH_KEY" > ~/.ssh/id_rsa
             - chmod 600 ~/.ssh/id_rsa
+            - echo "DATABASE_URL=$SSH_USER" > .env
+            - echo "SECRET_KEY=$UAT_HOST" >> .env
             - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST "cd $UAT_PATH && git pull origin develop"
   
   
