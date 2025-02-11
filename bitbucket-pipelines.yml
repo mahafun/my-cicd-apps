@@ -12,6 +12,7 @@ pipelines:
             - chmod 600 ~/.ssh/id_rsa
             - echo "DATABASE_URL=$SSH_USER" > .env
             - echo "SECRET_KEY=$UAT_HOST" >> .env
+            - scp -o StrictHostKeyChecking=no .env $SSH_USER@$SSH_HOST:/var/www/app/.env
             - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST "cd $UAT_PATH && git pull origin develop"
   
   
