@@ -21,7 +21,7 @@ pipelines:
            # Deploy to Staging Server
             - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST <<EOF
                 export NVM_DIR="$HOME/.nvm"
-                [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                source "$NVM_DIR/nvm.sh"
                 cd $UAT_PATH
                 git pull origin develop
                 npm install
