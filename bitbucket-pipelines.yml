@@ -10,15 +10,23 @@ pipelines:
             - mkdir -p ~/.ssh
             - echo "$SSH_KEY" > ~/.ssh/id_rsa
             - chmod 600 ~/.ssh/id_rsa
-            - echo "DB_HOST=$DB_HOST" > .env
+            - echo "DB_HOST=$DB_HOST" >> .env
             - echo "DB_USER=$DB_USER" >> .env
             - echo "DB_PASSWORD=$DB_PASSWORD" >> .env
             - echo "DB_PORT=$DB_PORT" >> .env
+            # Ensure remote path exists before copying .env
+            - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST "mkdir -p $UAT_PATH"
             - scp -o StrictHostKeyChecking=no .env $SSH_USER@$UAT_HOST:$UAT_PATH/.env
             - echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
-            - echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc
-            - source ~/.bashrc
-            - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST "cd $UAT_PATH && git pull origin develop && npm install && node app.js"
+           # Deploy to Staging Server
+            - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST <<EOF
+                export NVM_DIR="$HOME/.nvm"
+                [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                cd $UAT_PATH
+                git pull origin develop
+                npm install
+                node app.js
+              EOF
   
   
   # && npm install && pm2 restart all
