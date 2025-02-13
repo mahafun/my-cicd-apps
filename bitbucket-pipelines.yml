@@ -15,7 +15,7 @@ pipelines:
             - echo "DB_PASSWORD=$DB_PASSWORD" >> .env
             - echo "DB_PORT=$DB_PORT" >> .env
             - scp -o StrictHostKeyChecking=no .env $SSH_USER@$UAT_HOST:$UAT_PATH/.env
-                 - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST <<EOF export HOME="/home/$SSH_USER" export NVM_DIR="\$HOME/.nvm" if [ -s "\$NVM_DIR/nvm.sh" ]; then . "\$NVM_DIR/nvm.sh" else echo "NVM is not installed. Exiting." exit 1 fi cd $UAT_PATH git pull origin develop npm install node app.js EOF
+                 - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST <<EOF export HOME="/home/$SSH_USER" export NVM_DIR="\$HOME/.nvm" if [ -s "\$NVM_DIR/nvm.sh" ]; then . "\$NVM_DIR/nvm.sh" else echo "NVM is not installed. Exiting." exit 1 fi cd $UAT_PATH git pull origin develop npm install node app.js 'EOF'
   
   
   # && npm install && pm2 restart all
