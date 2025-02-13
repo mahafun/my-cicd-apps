@@ -17,7 +17,6 @@ pipelines:
             # Ensure remote path exists before copying .env
             - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST "mkdir -p $UAT_PATH"
             - scp -o StrictHostKeyChecking=no .env $SSH_USER@$UAT_HOST:$UAT_PATH/.env
-            - echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
            # Deploy to Staging Server
             - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST <<EOF
                 export NVM_DIR="$HOME/.nvm"
