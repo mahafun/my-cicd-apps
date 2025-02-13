@@ -14,18 +14,11 @@ pipelines:
             - echo "DB_USER=$DB_USER" >> .env
             - echo "DB_PASSWORD=$DB_PASSWORD" >> .env
             - echo "DB_PORT=$DB_PORT" >> .env
-            # Ensure remote path exists before copying .env
-            - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST "mkdir -p $UAT_PATH"
             - scp -o StrictHostKeyChecking=no .env $SSH_USER@$UAT_HOST:$UAT_PATH/.env
-           # Deploy to Staging Server
-            - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST <<EOF
-                export NVM_DIR="$HOME/.nvm"
-                source "$NVM_DIR/nvm.sh"
-                cd $UAT_PATH
-                git pull origin develop
-                npm install
-                node app.js
-              EOF
+            - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST "cd $UAT_PATH && git pull origin develop && npm install && node app.js"
+            - echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
+            - echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc
+            - source ~/.bashrc
   
   
   # && npm install && pm2 restart all
