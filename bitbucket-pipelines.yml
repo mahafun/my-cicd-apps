@@ -1,4 +1,4 @@
-image: node:18  # Use appropriate image for your stack
+image: node:18  # Use appropriate Node.js version
 
 pipelines:
   branches:
@@ -7,38 +7,39 @@ pipelines:
           name: Deploy to Staging
           script:
             - echo "Deploying to Staging..."
+            
+            # Setup SSH Key for authentication
             - mkdir -p ~/.ssh
-            - echo "$SSH_KEY" > ~/.ssh/id_rsa
+            - echo "$SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
             - chmod 600 ~/.ssh/id_rsa
-            - echo "DB_HOST=$DB_HOST" >> .env
+            - eval "$(ssh-agent -s)"
+            - ssh-add ~/.ssh/id_rsa
+
+            # Generate .env file and send to server
+            - echo "DB_HOST=$DB_HOST" > .env
             - echo "DB_USER=$DB_USER" >> .env
             - echo "DB_PASSWORD=$DB_PASSWORD" >> .env
             - echo "DB_PORT=$DB_PORT" >> .env
+
+            # Ensure remote path exists before copying .env
+            - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST "mkdir -p $UAT_PATH"
             - scp -o StrictHostKeyChecking=no .env $SSH_USER@$UAT_HOST:$UAT_PATH/.env
-            - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST << 'EOF'
-                export HOME="/$SSH_USER"
-                export NVM_DIR="\$HOME/.nvm"
-                if [ -s "\$NVM_DIR/nvm.sh" ]; then
-                  . "\$NVM_DIR/nvm.sh"
-                else
-                  echo "NVM is not installed. Exiting."
-                  exit 1
-                fi
-                cd $UAT_PATH
-                git pull origin develop
-                npm install
-                node app.js
-              EOF
-  
-  
-  # && npm install && pm2 restart all
+
+            # Deploy to Staging Server - FIXED EOF & NVM Setup
+            - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST <<EOF export HOME="/home/$SSH_USER" export NVM_DIR="\$HOME/.nvm" if [ -s "\$NVM_DIR/nvm.sh" ]; then . "\$NVM_DIR/nvm.sh" else echo "NVM is not installed. Exiting." exit 1 fi cd $UAT_PATH git pull origin develop npm install node app.js EOF
 
     main:
       - step:
           name: Deploy to Production
           script:
             - echo "Deploying to Production..."
+            
+            # Setup SSH Key for authentication
             - mkdir -p ~/.ssh
-            - echo "$SSH_KEY" > ~/.ssh/id_rsa
+            - echo "$SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
             - chmod 600 ~/.ssh/id_rsa
-            - ssh -o StrictHostKeyChecking=no $SSH_USER@$PROD_HOST "cd $PROD_PATH && git pull origin main && npm install && pm2 restart all"
+            - eval "$(ssh-agent -s)"
+            - ssh-add ~/.ssh/id_rsa
+
+            # Deploy to Production Server - FIXED EOF & NVM Setup
+            - ssh -o StrictHostKeyChecking=no $SSH_USER@$PROD_HOST <<EOF export HOME="/home/$SSH_USER" export NVM_DIR="\$HOME/.nvm" if [ -s "\$NVM_DIR/nvm.sh" ]; then . "\$NVM_DIR/nvm.sh" else echo "NVM is not installed. Exiting." exit  fi cd $PROD_PATH git pull origin main npm install pm2 restart all EOF
