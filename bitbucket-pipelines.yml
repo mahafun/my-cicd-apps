@@ -18,7 +18,7 @@ pipelines:
             - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST
             - echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
             - echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc
-            - source ~/.bashrc
+            # - source ~/.bashrc
             - cd $UAT_PATH && git pull origin develop && npm install && node app.js
   
   
