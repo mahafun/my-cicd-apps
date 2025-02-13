@@ -10,9 +10,14 @@ pipelines:
             - mkdir -p ~/.ssh
             - echo "$SSH_KEY" > ~/.ssh/id_rsa
             - chmod 600 ~/.ssh/id_rsa
-            - echo "DATABASE_URL=$SSH_USER" > .env
-            - echo "SECRET_KEY=$UAT_HOST" >> .env
+            - echo "DB_HOST=$DB_HOST" > .env
+            - echo "DB_USER=$DB_USER" >> .env
+            - echo "DB_PASSWORD=$DB_PASSWORD" >> .env
+            - echo "DB_PORT=$DB_PORT" >> .env
             - scp -o StrictHostKeyChecking=no .env $SSH_USER@$UAT_HOST:$UAT_PATH/.env
+            - echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
+            - echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc
+            - source ~/.bashrc
             - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST "cd $UAT_PATH && git pull origin develop && npm install && node app.js"
   
   
