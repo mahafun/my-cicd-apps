@@ -15,7 +15,11 @@ pipelines:
             - echo "DB_PASSWORD=$DB_PASSWORD" >> .env
             - echo "DB_PORT=$DB_PORT" >> .env
             - scp -o StrictHostKeyChecking=no .env $SSH_USER@$UAT_HOST:$UAT_PATH/.env
-            - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST "ls -l ~/.nvm && nvm list && npm -v && cd $UAT_PATH && git pull origin develop && npm install && node app.js"
+            # - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST "ls -l ~/.nvm && nvm list && npm -v && cd $UAT_PATH && git pull origin develop && npm install && node app.js"
+            - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST << 'EOF'
+              export HOME="/home/$SSH_USER"
+              export NVM_DIR="$HOME/.nvm"
+              'EOF'
   
   
   # && npm install && pm2 restart all
