@@ -3,6 +3,8 @@ const dbConfig = require('./dbConfig');
 
 const connection = mysql.createConnection(dbConfig);
 
+console.log('Connecting to the database...');
+
 connection.connect((err) => {
   if (err) {
     console.error('Error connecting to the database:', err.stack);
