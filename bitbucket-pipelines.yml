@@ -19,6 +19,7 @@ pipelines:
             - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST << 'EOF'
               export HOME="/home/$SSH_USER"
               export NVM_DIR="$HOME/.nvm"
+              nvm list
               'EOF'
   
   
