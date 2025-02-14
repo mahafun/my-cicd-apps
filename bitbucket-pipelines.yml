@@ -25,7 +25,8 @@ pipelines:
                 npm install
                 node app.js
               EOF
-  
+              
+            - echo "Success"  
   # && npm install && pm2 restart all
 
     main:
