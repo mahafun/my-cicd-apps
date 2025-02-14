@@ -20,6 +20,9 @@ pipelines:
               export HOME="/home/$SSH_USER"
               export NVM_DIR="$HOME/.nvm"
               nvm list
+              npm -v
+              cd $UAT_PATH
+              ls
               'EOF'
   
   
