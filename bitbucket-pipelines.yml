@@ -19,11 +19,14 @@ pipelines:
             - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST << 'EOF'
                 export HOME="/home/$SSH_USER"
                 export NVM_DIR="$HOME/.nvm"
-                nvm list
+                source $NVM_DIR/nvm.sh
+                nvm use node
                 npm -v
                 cd $UAT_PATH
-                ls
-              'EOF'
+                git pull origin develop
+                npm install
+                node app.js
+              EOF
   
   
   # && npm install && pm2 restart all
