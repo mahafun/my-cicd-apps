@@ -18,6 +18,7 @@ pipelines:
             # - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST "ls -l ~/.nvm && nvm list && npm -v && cd $UAT_PATH && git pull origin develop && npm install && node app.js"
             - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST << 'EOF'
                 export NVM_DIR="/root/.nvm"
+                [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
                 echo $NVM_DIR/nvm.sh
                 nvm use node
                 npm -v
