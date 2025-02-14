@@ -17,50 +17,15 @@ pipelines:
             - scp -o StrictHostKeyChecking=no .env $SSH_USER@$UAT_HOST:$UAT_PATH/.env
             # - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST "ls -l ~/.nvm && nvm list && npm -v && cd $UAT_PATH && git pull origin develop && npm install && node app.js"
             - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST << 'EOF'
-              HOME="/home/$SSH_USER"
-              NVM_DIR="$HOME/.nvm"
-
-              # Ensure NVM is installed
-              if [ ! -d "$NVM_DIR" ]; then
-                echo "NVM is not installed. Installing now..."
-                curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
-              fi
-
-              # Ensure NVM is loaded in this session
-              if [ -s "$NVM_DIR/nvm.sh" ]; then
-                . "$NVM_DIR/nvm.sh"
-                nvm install 18
-                nvm use 18
-              else
-                echo "NVM installation failed. Exiting."
-                exit 1
-              fi
-
-              # Check if Node.js and npm are available
-              node -v
-              npm -v
-
-              # Deploy application (ensure paths with spaces are quoted)
-              cd "$UAT_PATH"
-              git pull origin develop
-              npm install
-              node app.js
+                export NVM_DIR="/root/.nvm"
+                echo $NVM_DIR/nvm.sh
+                nvm use node
+                npm -v
+                cd $UAT_PATH
+                git pull origin develop
+                npm install
+                node app.js
               EOF
-
-    master:
-      - step:
-          name: Deploy to Production
-          script:
-            - echo "Deploying to Production..."
-            - mkdir -p ~/.ssh
-            - echo "$SSH_KEY" > ~/.ssh/id_rsa
-            - chmod 600 ~/.ssh/id_rsa
-            - echo "DB_HOST=$DB_HOST" >> .env
-            - echo "DB_USER=$DB_USER" >> .env
-            - echo "DB_PASSWORD=$DB_PASSWORD" >> .env
-            - echo "DB_PORT=$DB_PORT" >> .env
-            - scp -o StrictHostKeyChecking=no .env $SSH_USER@$PROD_HOST:$PROD_PATH/.env
-            - ssh -o StrictHostKeyChecking=no $SSH_USER@$PROD_HOST << 'EOF'
   
   # && npm install && pm2 restart all
 
