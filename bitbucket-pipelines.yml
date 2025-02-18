@@ -7,7 +7,7 @@ pipelines:
           name: Deploy to Staging
           caches:
             - node
-            - nvm_cache
+            - nvmcache
           script:
             - echo "Deploying to Staging..."
             - mkdir -p ~/.ssh
@@ -44,4 +44,4 @@ pipelines:
 
 definitions:
   caches:
-    nvm_cache: $HOME/.nvm
+    nvmcache: $HOME/.nvm
