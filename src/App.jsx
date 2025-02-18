@@ -43,7 +43,10 @@ function App() {
             </p>
           </>
         } />
-      </Routes>
+    
+          <Route path="/home" element={<Home />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
     </Router>
   )
 }
