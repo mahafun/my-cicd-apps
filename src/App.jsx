@@ -3,9 +3,14 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+import { BrowserRouter as Router, Route, Routes,Link } from 'react-router-dom';
 import KngHome from './pages/KngHome';
+
+
+const Home = () => <h1>🏠 Home Page</h1>;
+const About = () => <h1>ℹ️ About Page</h1>;
+
 
 function App() {
   const [count, setCount] = useState(0)
