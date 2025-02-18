@@ -5,6 +5,9 @@ pipelines:
     develop:
       - step:
           name: Deploy to Staging
+          caches:
+            - node
+            - nvm_cache
           script:
             - echo "Deploying to Staging..."
             - mkdir -p ~/.ssh
@@ -38,3 +41,7 @@ pipelines:
             - echo "$SSH_KEY" > ~/.ssh/id_rsa
             - chmod 600 ~/.ssh/id_rsa
             - ssh -o StrictHostKeyChecking=no $SSH_USER@$PROD_HOST "cd $PROD_PATH && git pull origin main && npm install && pm2 restart all"
+
+definitions:
+  caches:
+    nvm_cache: $HOME/.nvm
