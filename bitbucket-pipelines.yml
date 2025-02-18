@@ -11,9 +11,23 @@ pipelines:
             - mkdir -p ~/.ssh
             - echo "$SSH_KEY" > ~/.ssh/id_rsa
             - chmod 600 ~/.ssh/id_rsa
-            - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST "cd $UAT_PATH && git pull origin develop"
-  
-  
+            - echo "DB_HOST=$DB_HOST" >> .env
+            - echo "DB_USER=$DB_USER" >> .env
+            - echo "DB_PASSWORD=$DB_PASSWORD" >> .env
+            - echo "DB_NAME=$DB_NAME" >> .env
+            - echo "DB_PORT=$DB_PORT" >> .env
+            - scp -o StrictHostKeyChecking=no .env $SSH_USER@$UAT_HOST:$UAT_PATH/.env
+            - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST "source ~/.nvm/nvm.sh && nvm list && nvm use 20 && npm -v && cd $UAT_PATH && git pull origin develop && npm install && npm run start"
+            # - ssh -T -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST "
+              
+            #   nvm use node && 
+            #   npm -v &&
+            #   cd $UAT_PATH &&
+            #   git pull origin develop &&
+            #   npm install &&
+            #   node app.js &&
+            #   echo Success "
+              
   # && npm install && pm2 restart all
 
     main:
