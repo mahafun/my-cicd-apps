@@ -17,6 +17,10 @@ function App() {
 
   return (
     <Router>
+      <nav>
+        <Link to="/">Root</Link> | <Link to="/kng-home">Kng Home</Link> | <Link to="/home">Home</Link> | <Link to="/about">About</Link>
+      </nav>
+
       <Routes>
         <Route path="/kng-home" element={<KngHome />} />
         <Route path="/" element={
