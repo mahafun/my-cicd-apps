@@ -6,6 +6,7 @@ import './App.css'
 
 import { BrowserRouter as Router, Route, Routes,Link } from 'react-router-dom';
 import KngHome from './pages/KngHome';
+import ArumIndex from './pages/Arum/index';
 
 
 const Home = () => <h1>🏠 Home Page</h1>;
@@ -23,6 +24,7 @@ function App() {
 
       <Routes>
         <Route path="/kng-home" element={<KngHome />} />
+        <Route path="/arum-index" element={<ArumIndex />} />
         <Route path="/" element={
           <>
             <div>
