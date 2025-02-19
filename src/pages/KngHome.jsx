@@ -7,6 +7,7 @@ const KngHome = () => {
     <div>
       <h1>Welcome to Kng Home</h1>
       <p>This is the Kng Home page.</p>
+      <p>It is a private page for Kng users.</p>
     </div>
   );
 };
