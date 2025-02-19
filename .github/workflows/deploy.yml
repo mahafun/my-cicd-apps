@@ -27,11 +27,11 @@ jobs:
       - name: Run SonarCloud Scan (Only for Develop)
         if: github.ref == 'refs/heads/develop'
         uses: sonarsource/sonarcloud-github-action@v2
-        # with:
-        #   args: >
-        #     -Dsonar.organization=your-org
-        #     -Dsonar.projectKey=your-project
-        #     -Dsonar.sources=.
+        with:
+          args: >
+            -Dsonar.organization=mahafun
+            -Dsonar.projectKey=mahafun_my-cicd-apps
+            -Dsonar.sources=.
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
