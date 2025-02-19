@@ -1,1 +1,3 @@
-console.log('GG Shortener App');
+const advandedOptions = "Advanced Options";
+
+console.log(advandedOptions);
