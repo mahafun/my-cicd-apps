@@ -1,0 +1,80 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full clone as in Bitbucket
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20  # Ensuring compatibility
+
+      - name: Install Dependencies
+        run: npm install
+
+      # - name: Run SonarCloud Scan (Only for Develop)
+      #   if: github.ref == 'refs/heads/develop'
+      #   uses: sonarsource/sonarcloud-github-action@v2
+      #   with:
+      #     args: >
+      #       -Dsonar.organization=your-org
+      #       -Dsonar.projectKey=your-project
+      #       -Dsonar.sources=.
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      # - name: SonarCloud Quality Gate
+      #   if: github.ref == 'refs/heads/develop'
+      #   run: |
+      #     curl -X GET "https://sonarcloud.io/api/qualitygates/project_status?projectKey=your-project" \
+      #     -u "${{ secrets.SONAR_TOKEN }}:" | jq .
+
+      - name: Setup SSH for Deployment
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo "StrictHostKeyChecking no" >> ~/.ssh/config
+
+      - name: Deploy to Staging (Develop Branch)
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          echo "Deploying to Staging..."
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
+          echo "DB_USER=${{ secrets.DB_USER }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
+          echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
+          scp .env ${{ secrets.SSH_USER }}@${{ secrets.UAT_HOST }}:${{ secrets.UAT_PATH }}/.env
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.UAT_HOST }} "
+            source ~/.nvm/nvm.sh && 
+            nvm use 20 &&
+            cd ${{ secrets.UAT_PATH }} &&
+            git pull origin develop &&
+            npm install &&
+            npm run build &&
+            pm2 restart all
+          "
+
+      - name: Deploy to Production (Main Branch)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "Deploying to Production..."
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.PROD_HOST }} "
+            cd ${{ secrets.PROD_PATH }} &&
+            git pull origin main &&
+            npm install &&
+            pm2 restart all
+          "
