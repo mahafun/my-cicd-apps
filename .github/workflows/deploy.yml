@@ -29,7 +29,7 @@ jobs:
         uses: sonarsource/sonarcloud-github-action@v2
         with:
           args: >
-            -Dsonar.organization=mahafun
+            -Dsonar.organization=mahafundev
             -Dsonar.projectKey=mahafun_my-cicd-apps
             -Dsonar.sources=.
         env:
