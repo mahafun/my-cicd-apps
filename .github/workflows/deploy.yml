@@ -64,6 +64,7 @@ jobs:
             cd ${{ secrets.UAT_PATH }} &&
             git pull origin develop &&
             npm install &&
+            npm jest --coverage &&
             npm run build &&
             pm2 restart all
           "
