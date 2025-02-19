@@ -2,8 +2,8 @@
 const anna = () => {
     return (
         <div>
-            <h1>Welcome to anna Home</h1>
-            <p>This is the anna Home page.</p>
+            <h1>URL Shortener application</h1>
+            <p>Welcome!</p>
         </div>
     );
 };

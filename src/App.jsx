@@ -4,8 +4,9 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-import { BrowserRouter as Router, Route, Routes,Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import KngHome from './pages/KngHome';
+import shortener from './pages/shortenerApp';
 import ArumIndex from './pages/Arum/index';
 
 
@@ -19,11 +20,12 @@ function App() {
   return (
     <Router>
       <nav>
-        <Link to="/">Root</Link> | <Link to="/kng-home">Kng Home</Link> | <Link to="/home">Home</Link> | <Link to="/about">About</Link>
+        <Link to="/">Root</Link> | <Link to="/url-shortener">URL Shortener</Link> | <Link to="/kng-home">Kng Home</Link> | <Link to="/home">Home</Link> | <Link to="/about">About</Link>
       </nav>
 
       <Routes>
         <Route path="/kng-home" element={<KngHome />} />
+        <Route path="/url-shortener" element={<shortener />} />
         <Route path="/arum-index" element={<ArumIndex />} />
         <Route path="/" element={
           <>
@@ -49,10 +51,10 @@ function App() {
             </p>
           </>
         } />
-    
-          <Route path="/home" element={<Home />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
+
+        <Route path="/home" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
     </Router>
   )
 }
