@@ -1,12 +1,16 @@
 image: node:18  # Use appropriate image for your stack
-
+clone:
+  depth: full 
 pipelines:
   branches:
     develop:
       - step:
           name: Deploy to Staging
+           
           script:
             - echo "Deploying to Staging..."
+            - pipe: sonarsource/sonarcloud-scan:3.0.0
+            - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
             - mkdir -p ~/.ssh
             - echo "$SSH_KEY" > ~/.ssh/id_rsa
             - chmod 600 ~/.ssh/id_rsa
@@ -18,13 +22,6 @@ pipelines:
             - scp -o StrictHostKeyChecking=no .env $SSH_USER@$UAT_HOST:$UAT_PATH/.env
             - ssh -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST "source ~/.nvm/nvm.sh && nvm list && nvm use 20 && npm -v && cd $UAT_PATH && git pull origin develop && npm install && npm run build && pm2 restart all"
             # - ssh -T -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST "
-              
-            #   nvm use node && 
-            #   npm -v &&
-            #   cd $UAT_PATH &&
-            #   git pull origin develop &&
-            #   npm install &&
-            #   node app.js &&
             #   echo Success "
               
   # && npm install && pm2 restart all
