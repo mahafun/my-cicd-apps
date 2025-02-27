@@ -1,12 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1740640933052" clover="3.2.0">
-  <project timestamp="1740640933052" name="All files">
-    <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1" elements="4" coveredelements="4" complexity="0" loc="3" ncloc="3" packages="1" files="1" classes="1"/>
-    <file name="Button.jsx" path="/Volumes/Data/projects/cicd/my-cicd-apps/src/components/Button.jsx">
+<coverage generated="1740646192982" clover="3.2.0">
+  <project timestamp="1740646192982" name="All files">
+    <metrics statements="15" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="10" coveredmethods="2" elements="25" coveredelements="11" complexity="0" loc="15" ncloc="15" packages="4" files="5" classes="5"/>
+    <package name="src">
+      <metrics statements="5" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="1"/>
+      <file name="App.jsx" path="/Volumes/Data/projects/cicd/my-cicd-apps/src/App.jsx">
+        <metrics statements="5" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="1"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="41" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.components">
       <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-      <line num="5" count="1" type="stmt"/>
-      <line num="6" count="2" type="stmt"/>
-      <line num="8" count="1" type="stmt"/>
-    </file>
+      <file name="Button.jsx" path="/Volumes/Data/projects/cicd/my-cicd-apps/src/components/Button.jsx">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.pages">
+      <metrics statements="4" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <file name="KngHome.jsx" path="/Volumes/Data/projects/cicd/my-cicd-apps/src/pages/KngHome.jsx">
+        <metrics statements="2" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+      </file>
+      <file name="shortenerApp.jsx" path="/Volumes/Data/projects/cicd/my-cicd-apps/src/pages/shortenerApp.jsx">
+        <metrics statements="2" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.pages.Arum">
+      <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <file name="index.jsx" path="/Volumes/Data/projects/cicd/my-cicd-apps/src/pages/Arum/index.jsx">
+        <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+    </package>
   </project>
 </coverage>
