@@ -1,10 +1,10 @@
-const mysql = require('mysql2/promise');
-const dbConfig = require('./dbConfig');
+import { createConnection } from 'mysql2/promise';
+import dbConfig from './dbConfig';
 
 async function main() {
   try {
     console.log('Connecting to the database...');
-    const connection = await mysql.createConnection(dbConfig);
+    const connection = await createConnection(dbConfig);
     console.log('Connected to the database as id', connection.threadId);
 
     // Perform a simple query
