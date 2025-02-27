@@ -8,11 +8,9 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import KngHome from './pages/KngHome';
 import shortener from './pages/shortenerApp';
 import ArumIndex from './pages/Arum/index';
- 
 
 const Home = () => <h1>🏠 Home Page</h1>;
 const About = () => <h1>ℹ️ About Page</h1>;
-
 
 function App() {
   const [count, setCount] = useState(0)
@@ -51,12 +49,10 @@ function App() {
             </p>
           </>
         } />
-
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
       </Routes>
     </Router>
   )
 }
-
 export default App
