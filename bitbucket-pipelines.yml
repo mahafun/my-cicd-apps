@@ -42,7 +42,7 @@ pipelines:
             - echo "DB_PORT=$DB_PORT" >> .env
             # - scp -o StrictHostKeyChecking=no .env $SSH_USER@$UAT_HOST:$UAT_PATH/.env
             - scp -o StrictHostKeyChecking=no .env $SSH_USER@$PROD_HOST:$PROD_PATH/.env
-            - ssh -o StrictHostKeyChecking=no $SSH_USER@$PROD_HOST "source ~/.nvm/nvm.sh && nvm list && nvm use 20 && npm -v && cd $PROD_PATH && git pull origin develop && npm install && npm run build && pm2 restart all"
+            - ssh -o StrictHostKeyChecking=no $SSH_USER@$PROD_HOST "source ~/.nvm/nvm.sh && nvm list && nvm use 20 && npm -v && cd $PROD_PATH && git pull origin main && npm install && npm run build && pm2 restart all"
             # - ssh -T -o StrictHostKeyChecking=no $SSH_USER@$UAT_HOST "
 
             #   echo Success "        
