@@ -1,18 +1,17 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import viteLogo from '../public/vite.svg'
 import './App.css'
+import React from 'react';
 
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import KngHome from './pages/KngHome';
 import shortener from './pages/shortenerApp';
 import ArumIndex from './pages/Arum/index';
 
-
 const Home = () => <h1>🏠 Home Page</h1>;
 const About = () => <h1>ℹ️ About Page</h1>;
-
 
 function App() {
   const [count, setCount] = useState(0)
@@ -43,20 +42,19 @@ function App() {
                 count is {count}
               </button>
               <p>
-                Edit <code>src/App.jsx</code> and save to test HMR
+                Edit <code>src/App.jsx</code> and save to test HMR 
               </p>
             </div>
             <p className="read-the-docs">
               Click on the Vite and React logos to learn more
             </p>
+            
           </>
         } />
-
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
       </Routes>
     </Router>
   )
 }
-
 export default App
