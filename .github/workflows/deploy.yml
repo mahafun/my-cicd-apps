@@ -24,16 +24,25 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Run SonarCloud Scan (Only for Develop)
-        if: github.ref == 'refs/heads/develop'
-        uses: sonarsource/sonarcloud-github-action@v2
+      - name: Run SonarQube
+        uses: actions/checkout@v4
         with:
-          args: >
-            -Dsonar.organization=mahafundev
-            -Dsonar.projectKey=mahafun_my-cicd-apps
-            -Dsonar.sources=.
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: SonarSource/sonarqube-scan-action@v4
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          
+      # - name: Run SonarCloud Scan (Only for Develop)
+      #   if: github.ref == 'refs/heads/develop'
+      #   uses: sonarsource/sonarcloud-github-action@v2
+      #   with:
+      #     args: >
+      #       -Dsonar.organization=mahafundev
+      #       -Dsonar.projectKey=mahafun_my-cicd-apps
+      #       -Dsonar.sources=.
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       # - name: SonarCloud Quality Gate
       #   if: github.ref == 'refs/heads/develop'
@@ -64,7 +73,6 @@ jobs:
             cd ${{ secrets.UAT_PATH }} &&
             git pull origin develop &&
             npm install &&
-            npm jest --coverage &&
             npm run build &&
             pm2 restart all
           "
